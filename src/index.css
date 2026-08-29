@@ -606,11 +606,14 @@ input { font-family: inherit; }
 
 .hero-corner-title {
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.4vw, 42px);
-  line-height: 0.95;
+  font-size: clamp(22px, 3.2vw, 38px);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #fff;
-  max-width: 82%;
+  max-width: 100%;
+  word-break: normal;
+  overflow-wrap: break-word;
   margin-bottom: 16px;
 }
 
@@ -1709,44 +1712,77 @@ input { font-family: inherit; }
 
   .hero-featured-card {
     min-height: auto;
+    overflow: hidden;
   }
 
   .notch-card-content {
-    padding: 24px 18px 60px;
+    padding: 20px 16px;
+    overflow: hidden;
   }
 
   .hero-corner-title {
-    font-size: 24px;
+    font-size: 20px;
     max-width: 100%;
-    line-height: 1.05;
+    line-height: 1.1;
     margin-bottom: 12px;
+    word-break: normal;
+    overflow-wrap: break-word;
   }
 
   .hero-stat-num {
-    font-size: 48px;
+    font-size: 40px;
+  }
+
+  .hero-stat-unit {
+    font-size: 13px;
   }
 
   .hero-stat-row {
-    margin: 12px 0;
+    margin: 10px 0 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .hero-spec-bullets {
+    margin-bottom: 12px;
+    gap: 6px 10px;
+    flex-wrap: wrap;
+    font-size: 9.5px;
   }
 
   .notch-dock-bottom {
-    width: 170px;
-    height: 48px;
+    position: static;
+    width: 100%;
+    height: auto;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 6px;
+    margin-top: 12px;
+    display: block;
+    box-sizing: border-box;
   }
 
-  .notch-fillet-bl {
-    right: 170px;
-  }
-
+  .notch-fillet-bl,
   .notch-fillet-tr {
-    bottom: 48px;
+    display: none !important;
+  }
+
+  .separated-mode-group {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
   }
 
   .separated-mode-btn {
-    height: 32px;
+    width: 100%;
+    height: 38px;
     padding: 0 8px;
-    font-size: 10px;
+    font-size: 11px;
+    justify-content: center;
+    box-sizing: border-box;
   }
 }
 
