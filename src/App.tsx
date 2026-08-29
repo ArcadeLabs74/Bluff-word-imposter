@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
-  VenetianMask,
   Home,
-  BookOpen,
-  Volume2,
-  VolumeX,
   LogOut,
   Radio,
   User as UserIcon,
@@ -41,14 +37,10 @@ export function App() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authRequiredForOnline, setAuthRequiredForOnline] = useState(false);
 
-  const [muted, setMuted] = useState(() => {
-    const saved = localStorage.getItem('imposter_muted') === '1';
-    soundManager.setMuted(saved);
-    return saved;
-  });
-
   useEffect(() => {
     initButtonFx();
+    const savedMuted = localStorage.getItem('imposter_muted') === '1';
+    soundManager.setMuted(savedMuted);
 
     authService.getCurrentUser().then((user) => setAuthUser(user));
     const unsubscribe = authService.onAuthStateChange((user) => {
@@ -59,12 +51,6 @@ export function App() {
       unsubscribe();
     };
   }, []);
-
-  const toggleMute = () => {
-    const next = soundManager.toggleMute();
-    setMuted(next);
-    localStorage.setItem('imposter_muted', next ? '1' : '0');
-  };
 
   // Local & Common Game State
   const [players, setPlayers] = useState<Player[]>([]);
@@ -551,38 +537,14 @@ export function App() {
             </span>
           )}
 
-          <button
-            className={`nav-icon-btn ${phase === 'home' ? 'active' : ''}`}
-            onClick={handleReturnHome}
-            aria-label="Home"
-            title="Return to Home"
-          >
-            {phase === 'home' ? <VenetianMask size={17} strokeWidth={2.2} /> : <Home size={17} />}
-          </button>
-          <button
-            className="nav-icon-btn"
-            onClick={() => setShowRules(true)}
-            aria-label="Manual & Rules"
-            title="How to play"
-          >
-            <BookOpen size={16} />
-          </button>
-          <button
-            className="nav-icon-btn"
-            onClick={toggleMute}
-            aria-label="Toggle Sound"
-            title={muted ? 'Unmute' : 'Mute'}
-          >
-            {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-          </button>
           {phase !== 'home' && (
             <button
               className="nav-icon-btn"
               onClick={handleReturnHome}
-              aria-label="Abort Session"
+              aria-label="Exit to Main Menu"
               title="Exit to Main Menu"
             >
-              <LogOut size={16} />
+              <Home size={15} />
             </button>
           )}
         </div>

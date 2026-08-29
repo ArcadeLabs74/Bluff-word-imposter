@@ -1517,23 +1517,27 @@ input { font-family: inherit; }
 .result-title {
   font-family: var(--font-display);
   font-weight: 400;
+.result-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5.5vw, 56px);
+  line-height: 0.95;
   text-transform: uppercase;
-  font-size: clamp(38px, 6vw, 60px);
-  line-height: 1;
-  margin-bottom: 12px;
+  color: #fff;
+  margin-bottom: 14px;
+  max-width: calc(100% - 76px);
+  word-break: break-word;
 }
 
-.result-reason {
-  max-width: 520px;
-  margin: 0 auto;
-  color: var(--text-secondary);
-  font-size: 15px;
-  line-height: 1.6;
+.result-hero-reason {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 480px;
 }
 
 .roster-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 10px;
 }
 
@@ -1541,10 +1545,22 @@ input { font-family: inherit; }
   display: flex;
   align-items: center;
   gap: 11px;
-  padding: 13px 15px;
+  padding: 12px 15px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
+  min-width: 0;
+}
+
+.roster-name {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--ink);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .role-tag {
@@ -1554,12 +1570,21 @@ input { font-family: inherit; }
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 5px 10px;
+  padding: 4px 9px;
   border-radius: 999px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .role-tag.crew { color: var(--accent-strong); background: var(--sage-soft); }
 .role-tag.imposter { color: var(--danger); background: var(--danger-soft); }
+
+.results-actions-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
 
 /* Modal */
 .modal-backdrop {
@@ -1707,46 +1732,114 @@ input { font-family: inherit; }
     padding: 0 8px;
   }
 
+  .brand-spine-card {
+    padding: 14px 18px !important;
+  }
+
+  .brand-spine-title {
+    font-size: 24px !important;
+  }
+
+  .brand-spine-tag {
+    font-size: 8px !important;
+    padding: 3px 6px !important;
+    white-space: nowrap;
+  }
+
   .hero-featured-card {
     min-height: auto;
+    position: relative;
   }
 
   .notch-card-content {
-    padding: 24px 18px 60px;
+    padding: 22px 16px 72px;
   }
 
   .hero-corner-title {
-    font-size: 24px;
+    font-size: clamp(20px, 5.5vw, 28px);
     max-width: 100%;
     line-height: 1.05;
     margin-bottom: 12px;
   }
 
   .hero-stat-num {
-    font-size: 48px;
+    font-size: 42px;
   }
 
   .hero-stat-row {
-    margin: 12px 0;
+    margin: 8px 0;
+  }
+
+  .hero-spec-bullets {
+    font-size: 9px;
+    gap: 6px 10px;
+    max-width: 100%;
+    line-height: 1.4;
   }
 
   .notch-dock-bottom {
-    width: 170px;
-    height: 48px;
+    width: 156px;
+    height: 44px;
+    padding: 0 4px 0 8px;
+    border-top-left-radius: 18px;
   }
 
   .notch-fillet-bl {
-    right: 170px;
+    right: 156px;
+    width: 18px;
+    height: 18px;
   }
 
   .notch-fillet-tr {
-    bottom: 48px;
+    bottom: 44px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .separated-mode-group {
+    gap: 3px;
+    width: 100%;
   }
 
   .separated-mode-btn {
-    height: 32px;
-    padding: 0 8px;
-    font-size: 10px;
+    height: 30px;
+    padding: 0 6px;
+    font-size: 9px;
+    gap: 3px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .separated-mode-btn svg {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+  }
+
+  /* Results Screen on Mobile */
+  .result-hero-title {
+    font-size: clamp(22px, 7vw, 36px);
+    max-width: calc(100% - 62px);
+    line-height: 1.05;
+    margin-bottom: 10px;
+  }
+
+  .roster-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .roster-card {
+    padding: 10px 14px;
+  }
+
+  .results-actions-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .results-actions-row .btn {
+    width: 100%;
   }
 }
 
