@@ -441,7 +441,7 @@ export function HomeScreen({
                   CONNECTED OPERATIVES ({onlinePlayers.length}/12) {onlinePlayers.length < 3 && '(Min 3 to launch)'}
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '10px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 220px), 1fr))', gap: '10px' }}>
                   {onlinePlayers.map((player) => (
                     <div
                       key={player.id}
@@ -637,7 +637,7 @@ export function HomeScreen({
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '10px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 240px), 1fr))', gap: '10px' }}>
               {names.map((name, i) => (
                 <div className="player-row" key={i} id={`player-row-${i}`} style={{ marginBottom: 0 }}>
                   <span
@@ -680,7 +680,7 @@ export function HomeScreen({
 
         <hr className="divider" />
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '16px' }}>
           <div className="setting-row">
             <div>
               <div className="setting-name">Imposters</div>

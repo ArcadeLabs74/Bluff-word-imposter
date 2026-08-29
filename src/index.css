@@ -401,14 +401,22 @@ input { font-family: inherit; }
 
 .bento-home-grid {
   display: grid;
-  grid-template-columns: 140px 1.4fr 1fr;
+  grid-template-columns: minmax(0, 140px) minmax(0, 1.4fr) minmax(0, 1fr);
   grid-template-rows: auto auto auto;
   gap: 14px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.bento-home-grid > * {
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 @media (max-width: 1080px) {
   .bento-home-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .brand-spine-card {
     grid-column: 1 / -1;
@@ -425,10 +433,10 @@ input { font-family: inherit; }
 
 @media (max-width: 768px) {
   .bento-home-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .brand-spine-card {
-    grid-column: auto;
+    grid-column: 1 / -1;
   }
 }
 
