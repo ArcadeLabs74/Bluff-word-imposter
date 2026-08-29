@@ -312,7 +312,9 @@ export function HomeScreen({
 
         <div className="notch-card-content">
           <h2 className="hero-corner-title">
-            BUILT FOR THE FIELD. TRUSTED IN THE ROOM. NEVER GET CAUGHT.
+            BUILT FOR THE FIELD.
+            <br />
+            TRUSTED IN THE ROOM. NEVER GET CAUGHT.
           </h2>
 
           <div className="hero-stat-row">

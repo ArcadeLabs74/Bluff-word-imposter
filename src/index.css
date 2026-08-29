@@ -606,8 +606,8 @@ input { font-family: inherit; }
 
 .hero-corner-title {
   font-family: var(--font-display);
-  font-size: clamp(22px, 3.2vw, 38px);
-  line-height: 1.05;
+  font-size: clamp(18px, 2.8vw, 36px);
+  line-height: 1.08;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #fff;
