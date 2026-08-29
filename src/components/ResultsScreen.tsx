@@ -136,15 +136,24 @@ export function ResultsScreen({
             </span>
           </div>
 
-          <h2 className="result-hero-title">
+          <h2
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(38px, 5.5vw, 56px)',
+              lineHeight: 0.95,
+              textTransform: 'uppercase',
+              color: '#fff',
+              marginBottom: 14,
+            }}
+          >
             {crewWon ? 'CREW VICTORY' : 'IMPOSTER ESCAPED'}
           </h2>
 
-          <p className="result-hero-reason">
+          <p style={{ fontSize: 15, lineHeight: 1.6, color: 'rgba(255, 255, 255, 0.85)', maxWidth: 480 }}>
             {reason}
           </p>
 
-          <div style={{ marginTop: 18, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <div style={{ marginTop: 22, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <span
               style={{
                 display: 'inline-flex',
@@ -191,7 +200,7 @@ export function ResultsScreen({
               <span className="mini-dot" style={{ background: p.color }}>
                 {p.name.charAt(0).toUpperCase()}
               </span>
-              <span className="roster-name">{p.name}</span>
+              <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>{p.name}</span>
               <span className={`role-tag ${p.role}`}>{p.role === 'imposter' ? 'IMPOSTER' : 'CREW'}</span>
             </div>
           ))}
@@ -211,7 +220,7 @@ export function ResultsScreen({
         </div>
       )}
 
-      <div className="results-actions-row" style={{ display: 'flex', gap: 12, marginTop: 24, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 12, marginTop: 24, flexWrap: 'wrap' }}>
         <button className="btn btn-primary btn-lg" style={{ flex: 1 }} onClick={onRematch}>
           <RotateCcw size={16} />
           REMATCH — NEW WORD ↗
