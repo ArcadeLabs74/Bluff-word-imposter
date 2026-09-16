@@ -48,7 +48,12 @@ export async function generateAiWord(categoryId?: string): Promise<WordData> {
   }
 
   try {
-    const response = await ai.models.generateContent({
+    // 2.5s strict timeout ensures launching never stalls or feels unresponsive
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('AI generation timed out after 2500ms')), 2500)
+    );
+
+    const apiPromise = ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: `You are the master game engine for a social deduction party game called "Guess The Imposter" (similar to Spyfall and Chameleon).
 
@@ -74,6 +79,8 @@ Rules:
         },
       },
     });
+
+    const response = await Promise.race([apiPromise, timeoutPromise]);
 
     const text = response.text?.trim();
     if (!text) {

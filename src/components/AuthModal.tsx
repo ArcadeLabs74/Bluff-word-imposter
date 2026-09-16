@@ -120,9 +120,10 @@ export function AuthModal({
 
         setSuccessMsg('Password reset link has been dispatched to your email.');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Auth error:', err);
-      setErrorMsg(err?.message || 'Authentication failed. Please check your credentials.');
+      const msg = err instanceof Error ? err.message : 'Authentication failed. Please check your credentials.';
+      setErrorMsg(msg);
     } finally {
       setLoading(false);
     }
@@ -136,9 +137,10 @@ export function AuthModal({
     try {
       const { error } = await authService.signInWithGoogle();
       if (error) throw error;
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Google OAuth error:', err);
-      setErrorMsg(err?.message || 'Failed to initialize Google Sign In.');
+      const msg = err instanceof Error ? err.message : 'Failed to initialize Google Sign In.';
+      setErrorMsg(msg);
       setGoogleLoading(false);
     }
   };

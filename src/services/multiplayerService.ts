@@ -229,17 +229,19 @@ class MultiplayerService {
       imposterIndices.add(Math.floor(Math.random() * playerList.length));
     }
 
-    // 4. Update each player's role in DB
-    for (let i = 0; i < playerList.length; i++) {
-      const isImp = imposterIndices.has(i);
-      await supabase
-        .from('players')
-        .update({
-          role: isImp ? 'imposter' : 'crew',
-          voted_for: null,
-        })
-        .eq('id', playerList[i].id);
-    }
+    // 4. Update each player's role in DB concurrently
+    await Promise.all(
+      playerList.map((p, i) => {
+        const isImp = imposterIndices.has(i);
+        return supabase
+          .from('players')
+          .update({
+            role: isImp ? 'imposter' : 'crew',
+            voted_for: null,
+          })
+          .eq('id', p.id);
+      })
+    );
 
     // 5. Clear old clues
     await supabase.from('clues').delete().eq('room_id', roomId);
@@ -409,8 +411,8 @@ class MultiplayerService {
     const imposters = allPlayers.filter((p) => p.role === 'imposter');
     const imposterNames = imposters.map((p) => p.name).join(', ');
 
-    let winner: 'crew' | 'imposter' = 'crew';
-    let winReason = '';
+    let winner: 'crew' | 'imposter';
+    let winReason: string;
 
     if (!ejectedId || isTie || skipped >= top) {
       winner = 'imposter';

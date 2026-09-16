@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
-import { ShieldCheck, EyeOff, Trophy, RotateCcw, Home } from 'lucide-react';
+import { ShieldCheck, EyeOff, Trophy, RotateCcw, Home, Loader2 } from 'lucide-react';
 import type { Player, VoteResult, WordData } from '../types/game';
 import { animateScreenIn, popIn, shakeEl } from '../lib/animations';
 import { soundManager } from '../services/soundService';
@@ -11,7 +11,7 @@ interface ResultsScreenProps {
   voteResult: VoteResult;
   winner: 'crew' | 'imposter';
   reason: string;
-  onRematch: () => void;
+  onRematch: () => void | Promise<void>;
   onHome: () => void;
 }
 
@@ -25,7 +25,19 @@ export function ResultsScreen({
   onHome,
 }: ResultsScreenProps) {
   const [stage, setStage] = useState<'tally' | 'reveal'>('tally');
+  const [isRematching, setIsRematching] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
+
+  const handleRematch = async () => {
+    if (isRematching) return;
+    setIsRematching(true);
+    soundManager.playClick();
+    try {
+      await onRematch();
+    } finally {
+      setIsRematching(false);
+    }
+  };
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -91,11 +103,12 @@ export function ResultsScreen({
         <div className="notch-dock">
           <button
             className="notch-arrow-btn"
-            onClick={onRematch}
+            onClick={handleRematch}
+            disabled={isRematching}
             aria-label="Rematch"
             title="Launch Rematch"
           >
-            <RotateCcw size={22} />
+            {isRematching ? <Loader2 size={22} className="animate-spin" /> : <RotateCcw size={22} />}
           </button>
         </div>
 
@@ -200,7 +213,7 @@ export function ResultsScreen({
               <span className="mini-dot" style={{ background: p.color }}>
                 {p.name.charAt(0).toUpperCase()}
               </span>
-              <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>{p.name}</span>
+              <span className="roster-card-name">{p.name}</span>
               <span className={`role-tag ${p.role}`}>{p.role === 'imposter' ? 'IMPOSTER' : 'CREW'}</span>
             </div>
           ))}
@@ -220,12 +233,25 @@ export function ResultsScreen({
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: 12, marginTop: 24, flexWrap: 'wrap' }}>
-        <button className="btn btn-primary btn-lg" style={{ flex: 1 }} onClick={onRematch}>
-          <RotateCcw size={16} />
-          REMATCH — NEW WORD ↗
+      <div className="results-actions-group">
+        <button
+          className="btn btn-primary btn-lg"
+          onClick={handleRematch}
+          disabled={isRematching}
+        >
+          {isRematching ? (
+            <>
+              <Loader2 size={16} className="animate-spin" />
+              GENERATING MISSION…
+            </>
+          ) : (
+            <>
+              <RotateCcw size={16} />
+              REMATCH — NEW WORD ↗
+            </>
+          )}
         </button>
-        <button className="btn btn-secondary btn-lg" style={{ flex: 1 }} onClick={onHome}>
+        <button className="btn btn-secondary btn-lg" onClick={onHome} disabled={isRematching}>
           <Home size={16} />
           RETURN TO HOME
         </button>

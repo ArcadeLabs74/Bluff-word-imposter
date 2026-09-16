@@ -28,7 +28,7 @@ import { soundManager } from '../services/soundService';
 import { CategoryModal } from './CategoryModal';
 
 interface HomeScreenProps {
-  onStartLocalGame: (names: string[], settings: GameSettings) => void;
+  onStartLocalGame: (names: string[], settings: GameSettings) => void | Promise<void>;
   onOpenRules: () => void;
   // Supabase Auth Props
   authUser?: User | null;
@@ -75,28 +75,33 @@ export function HomeScreen({
   const heroRef = useRef<HTMLDivElement>(null);
   const setupRef = useRef<HTMLDivElement>(null);
 
-  const [gameMode, setGameMode] = useState<'local' | 'online'>(onlineRoom ? 'online' : 'local');
-  const [onlineTab, setOnlineTab] = useState<'host' | 'join'>('host');
+  const queryRoom = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('room') : null;
+
+  const [gameMode, setGameMode] = useState<'local' | 'online'>(() => (onlineRoom || queryRoom ? 'online' : 'local'));
+  const [onlineTab, setOnlineTab] = useState<'host' | 'join'>(() => (queryRoom ? 'join' : 'host'));
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const [invitedFriends, setInvitedFriends] = useState(false);
-  const [joinCode, setJoinCode] = useState('');
+  const [joinCode, setJoinCode] = useState(() => (queryRoom ? queryRoom.toUpperCase() : ''));
 
-  const defaultAlias = authUser?.user_metadata?.display_name || (authUser?.email ? authUser.email.split('@')[0] : 'Agent Phoenix');
+  const authAlias = authUser?.user_metadata?.display_name || (authUser?.email ? authUser.email.split('@')[0] : '');
+  const defaultAlias = authAlias || 'Agent Phoenix';
   const [joinName, setJoinName] = useState(defaultAlias);
   const [hostName, setHostName] = useState(defaultAlias || 'Host Operative');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLaunching, setIsLaunching] = useState(false);
   const [onlineError, setOnlineError] = useState<string | null>(null);
 
+  const prevAuthRef = useRef(authAlias);
   useEffect(() => {
-    if (authUser) {
-      const alias = authUser.user_metadata?.display_name || authUser.email?.split('@')[0];
-      if (alias) {
-        setHostName(alias);
-        setJoinName(alias);
-      }
+    if (authAlias && authAlias !== prevAuthRef.current) {
+      prevAuthRef.current = authAlias;
+      queueMicrotask(() => {
+        setHostName(authAlias);
+        setJoinName(authAlias);
+      });
     }
-  }, [authUser]);
+  }, [authAlias]);
 
   const [names, setNames] = useState(['', '', '', '']);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>(INITIAL_SELECTED_CATEGORIES);
@@ -109,18 +114,6 @@ export function HomeScreen({
   });
 
   const activeRoomCode = onlineRoom?.code || '';
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const urlRoom = params.get('room');
-      if (urlRoom) {
-        setGameMode('online');
-        setOnlineTab('join');
-        setJoinCode(urlRoom.toUpperCase());
-      }
-    }
-  }, []);
 
   const handleShareLink = async () => {
     if (!activeRoomCode) return;
@@ -221,12 +214,18 @@ export function HomeScreen({
   const canStartLocal = names.length >= MIN_PLAYERS;
   const canStartOnline = onlinePlayers.length >= MIN_PLAYERS;
 
-  const start = () => {
+  const start = async () => {
+    if (isLaunching) return;
+    setIsLaunching(true);
     soundManager.playCardFlip();
-    if (gameMode === 'online') {
-      if (onStartOnlineGame) onStartOnlineGame();
-    } else {
-      onStartLocalGame(finalNames, settings);
+    try {
+      if (gameMode === 'online') {
+        if (onStartOnlineGame) await onStartOnlineGame();
+      } else {
+        await onStartLocalGame(finalNames, settings);
+      }
+    } finally {
+      setIsLaunching(false);
     }
   };
 
@@ -245,7 +244,7 @@ export function HomeScreen({
 
         <div className="brand-spine-footer">
           <span className="status-dot-live" />
-          <span className="brand-spine-tag">{gameMode === 'local' ? 'PASS & PLAY' : 'ONLINE MULTIPLAYER'}</span>
+          <span className="brand-spine-tag">{gameMode === 'local' ? 'PASS & PLAY' : 'ONLINE'}</span>
         </div>
       </aside>
 
@@ -441,7 +440,7 @@ export function HomeScreen({
                   CONNECTED OPERATIVES ({onlinePlayers.length}/12) {onlinePlayers.length < 3 && '(Min 3 to launch)'}
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 220px), 1fr))', gap: '10px' }}>
+                <div className="online-players-grid">
                   {onlinePlayers.map((player) => (
                     <div
                       key={player.id}
@@ -637,7 +636,7 @@ export function HomeScreen({
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 240px), 1fr))', gap: '10px' }}>
+            <div className="player-inputs-grid">
               {names.map((name, i) => (
                 <div className="player-row" key={i} id={`player-row-${i}`} style={{ marginBottom: 0 }}>
                   <span
@@ -680,7 +679,7 @@ export function HomeScreen({
 
         <hr className="divider" />
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '16px' }}>
+        <div className="home-settings-grid">
           <div className="setting-row">
             <div>
               <div className="setting-name">Imposters</div>
@@ -783,12 +782,12 @@ export function HomeScreen({
 
         <div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12, flexWrap: 'wrap', gap: 8 }}>
-            <div>
+            <div style={{ minWidth: 0, flex: 1 }}>
               <div className="section-label" style={{ marginBottom: 2 }}>
                 <Layers size={13} />
                 Word Deck Selection
               </div>
-              <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+              <div style={{ fontSize: 12, color: 'var(--text-secondary)', wordBreak: 'break-word' }}>
                 Active: <strong style={{ color: 'var(--ink)' }}>{CATEGORY_OPTIONS.find((c) => c.id === settings.category)?.name || 'Random Mix'}</strong> · {CATEGORY_OPTIONS.find((c) => c.id === settings.category)?.description}
               </div>
             </div>
@@ -849,16 +848,25 @@ export function HomeScreen({
         <button
           className="btn btn-primary btn-block btn-lg"
           onClick={start}
-          disabled={gameMode === 'online' ? (!onlineRoom || !isHostingOnline || !canStartOnline) : !canStartLocal}
+          disabled={isLaunching || (gameMode === 'online' ? (!onlineRoom || !isHostingOnline || !canStartOnline) : !canStartLocal)}
         >
-          <Play size={17} strokeWidth={2.6} />
-          {gameMode === 'online'
-            ? onlineRoom
-              ? isHostingOnline
-                ? `Launch Online Mission (${onlinePlayers.length}/3 Min) ↗`
-                : 'Waiting for Host to Launch Mission…'
-              : 'Create or Join an Online Room Above ↗'
-            : `Launch Session with ${names.length} Players ↗`}
+          {isLaunching ? (
+            <>
+              <Loader2 size={17} className="animate-spin" />
+              LAUNCHING MISSION…
+            </>
+          ) : (
+            <>
+              <Play size={17} strokeWidth={2.6} />
+              {gameMode === 'online'
+                ? onlineRoom
+                  ? isHostingOnline
+                    ? `Launch Online Mission (${onlinePlayers.length}/3 Min) ↗`
+                    : 'Waiting for Host to Launch Mission…'
+                  : 'Create or Join an Online Room Above ↗'
+                : `Launch Session with ${names.length} Players ↗`}
+            </>
+          )}
         </button>
       </section>
 

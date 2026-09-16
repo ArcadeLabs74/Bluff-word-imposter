@@ -11,11 +11,12 @@
   },
   "dependencies": {
     "@google/genai": "^2.18.0",
+    "@rolldown/binding-win32-x64-msvc": "^1.2.8",
     "@supabase/supabase-js": "^2.112.4",
     "@types/canvas-confetti": "^1.9.0",
     "animejs": "^4.5.0",
     "canvas-confetti": "^1.9.4",
-    "lucide-react": "^1.31.0",
+    "lucide-react": "^1.46.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
