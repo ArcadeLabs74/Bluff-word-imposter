@@ -64,9 +64,6 @@ html, body {
 body {
   font-family: var(--font-body);
   background: var(--bg);
-  background-image: 
-    radial-gradient(circle at 50% 0%, #f4f8f3 0%, transparent 70%),
-    radial-gradient(circle at 10% 90%, #d8e2d6 0%, transparent 50%);
   color: var(--text-primary);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -258,6 +255,7 @@ input { font-family: inherit; }
   height: var(--notch-h);
   background: var(--parent-bg);
   border-bottom-left-radius: var(--notch-r);
+  border-top-right-radius: var(--radius-xl);
   display: grid;
   place-items: center;
   z-index: 3;
@@ -2086,6 +2084,10 @@ input { font-family: inherit; }
     --notch-h: 68px;
     --notch-r: 20px;
     border-radius: var(--radius-lg);
+  }
+
+  .notch-dock {
+    border-top-right-radius: var(--radius-lg);
   }
 
   .notch-arrow-btn {

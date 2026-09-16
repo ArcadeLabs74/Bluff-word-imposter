@@ -119,12 +119,7 @@ export function ResultsScreen({
           </svg>
         </div>
 
-        {/* Bottom-Right Inverted Concave Fillet */}
-        <div className="notch-fillet-br" aria-hidden="true">
-          <svg viewBox="0 0 28 28" fill="none" className="fillet-svg">
-            <path d="M 0 0 C 15.464 0 28 12.536 28 28 V 0 H 0 Z" fill="var(--parent-bg)" />
-          </svg>
-        </div>
+
 
         <div className="notch-card-content" style={{ textAlign: 'left' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
