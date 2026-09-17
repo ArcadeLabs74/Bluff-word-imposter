@@ -1,79 +1,92 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="280" viewBox="0 0 1200 280" role="img" aria-labelledby="flowTitle flowDesc">
-  <title id="flowTitle">Tactical Mission Workflow &amp; System Architecture</title>
-  <desc id="flowDesc">Step-by-step game loop: Setup, Serverless AI generation, Realtime Clue Passing, and Emergency Vote.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260" role="img" aria-labelledby="flowTitle flowDesc">
+  <title id="flowTitle">How A Game Works</title>
+  <desc id="flowDesc">Four simple steps of a Guess The Imposter match: Setup, Role Reveal, Clues, and Vote.</desc>
 
   <defs>
-    <linearGradient id="stepBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0e1f18"/>
-      <stop offset="100%" stop-color="#08140f"/>
-    </linearGradient>
+    <filter id="cardShadowFlow" x="-4%" y="-6%" width="108%" height="116%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0b1713" flood-opacity="0.05"/>
+    </filter>
   </defs>
 
-  <!-- Container -->
-  <rect width="1200" height="280" rx="20" fill="#070f0c" stroke="#1c3629" stroke-width="1.6"/>
+  <!-- Canvas Background (Matching website #e5ebe4) -->
+  <rect width="1200" height="260" rx="24" fill="#e5ebe4" stroke="#d2ded3" stroke-width="2"/>
 
-  <!-- Section Header -->
-  <g transform="translate(48, 34)">
-    <text x="0" y="0" fill="#7da58f" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11" font-weight="700" letter-spacing="2">SYSTEM WORKFLOW // TACTICAL MISSION CYCLE</text>
+  <!-- Eyebrow label -->
+  <g transform="translate(48, 28)">
+    <circle cx="6" cy="6" r="3.5" fill="#5a8a72"/>
+    <text x="18" y="10" fill="#0b1713" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="11" font-weight="700" letter-spacing="1.5">HOW A ROUND WORKS // 4 SIMPLE STEPS</text>
   </g>
 
-  <!-- Step 1: Lobby Setup -->
-  <g transform="translate(48, 62)">
-    <rect width="250" height="174" rx="16" fill="url(#stepBg)" stroke="#234233" stroke-width="1.2"/>
-    <rect x="18" y="16" width="34" height="24" rx="6" fill="#183628" stroke="#33664d" stroke-width="1"/>
-    <text x="28" y="32" fill="#7da58f" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11" font-weight="700">01</text>
-    <text x="62" y="32" fill="#f4f8f3" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700">LOBBY &amp; CONFIG</text>
-    <text x="18" y="72" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Local Pass &amp; Play (1 device)</text>
-    <text x="18" y="94" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Supabase Realtime Room (Multi)</text>
-    <text x="18" y="116" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• 10+ Curated Decks or Custom</text>
-    <text x="18" y="146" fill="#5a7366" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="600">3–12 PLAYERS · 1–3 IMPOSTERS</text>
+  <!-- Step 1: Setup -->
+  <g transform="translate(48, 52)">
+    <rect width="250" height="174" rx="18" fill="#ffffff" stroke="rgba(11, 23, 19, 0.12)" stroke-width="1.2" filter="url(#cardShadowFlow)"/>
+    <!-- Number Badge -->
+    <rect x="18" y="16" width="34" height="24" rx="6" fill="#f1f5ef" stroke="rgba(11, 23, 19, 0.12)" stroke-width="1"/>
+    <text x="28" y="32.5" fill="#0b1713" font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="11" font-weight="700">01</text>
+    <text x="62" y="33" fill="#0b1713" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="800">SETUP</text>
+    
+    <text x="18" y="74" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• 3 to 12 players</text>
+    <text x="18" y="98" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Choose a category deck</text>
+    <text x="18" y="122" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Pass 1 phone or join room</text>
+
+    <rect x="18" y="142" width="134" height="20" rx="10" fill="#dfe9e1"/>
+    <text x="85" y="155.5" text-anchor="middle" fill="#284437" font-family="ui-monospace, monospace" font-size="9" font-weight="700">NO ACCOUNTS NEEDED</text>
   </g>
 
   <!-- Arrow 1 -> 2 -->
-  <path d="M 314 149 L 338 149" stroke="#3d6651" stroke-width="2" stroke-linecap="round"/>
-  <polygon points="338,144 346,149 338,154" fill="#3d6651"/>
+  <path d="M 314 139 L 338 139" stroke="#7da58f" stroke-width="2" stroke-linecap="round"/>
+  <polygon points="338,134 346,139 338,144" fill="#7da58f"/>
 
-  <!-- Step 2: AI Word & Hint Synthesis -->
-  <g transform="translate(356, 62)">
-    <rect width="250" height="174" rx="16" fill="url(#stepBg)" stroke="#234233" stroke-width="1.2"/>
-    <rect x="18" y="16" width="34" height="24" rx="6" fill="#183628" stroke="#33664d" stroke-width="1"/>
-    <text x="28" y="32" fill="#7da58f" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11" font-weight="700">02</text>
-    <text x="62" y="32" fill="#f4f8f3" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700">AI SECRET ENGINE</text>
-    <text x="18" y="72" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Supabase Edge Function</text>
-    <text x="18" y="94" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Gemini 2.5 Flash synthesis</text>
-    <text x="18" y="116" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Cryptic hint for the imposter</text>
-    <text x="18" y="146" fill="#5a7366" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="600">ZERO CLIENT-SIDE KEY EXPOSURE</text>
+  <!-- Step 2: Role Reveal -->
+  <g transform="translate(356, 52)">
+    <rect width="250" height="174" rx="18" fill="#ffffff" stroke="rgba(11, 23, 19, 0.12)" stroke-width="1.2" filter="url(#cardShadowFlow)"/>
+    <rect x="18" y="16" width="34" height="24" rx="6" fill="#f1f5ef" stroke="rgba(11, 23, 19, 0.12)" stroke-width="1"/>
+    <text x="28" y="32.5" fill="#0b1713" font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="11" font-weight="700">02</text>
+    <text x="62" y="33" fill="#0b1713" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="800">ROLE REVEAL</text>
+
+    <text x="18" y="74" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Secret card flip</text>
+    <text x="18" y="98" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Crew gets secret word</text>
+    <text x="18" y="122" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Imposter gets a vague hint</text>
+
+    <rect x="18" y="142" width="134" height="20" rx="10" fill="#fee2e2"/>
+    <text x="85" y="155.5" text-anchor="middle" fill="#d44732" font-family="ui-monospace, monospace" font-size="9" font-weight="700">IMPOSTER BLUFFS</text>
   </g>
 
   <!-- Arrow 2 -> 3 -->
-  <path d="M 622 149 L 646 149" stroke="#3d6651" stroke-width="2" stroke-linecap="round"/>
-  <polygon points="646,144 654,149 646,154" fill="#3d6651"/>
+  <path d="M 622 139 L 646 139" stroke="#7da58f" stroke-width="2" stroke-linecap="round"/>
+  <polygon points="646,134 654,139 646,144" fill="#7da58f"/>
 
-  <!-- Step 3: Role Reveal & Clue Rounds -->
-  <g transform="translate(664, 62)">
-    <rect width="250" height="174" rx="16" fill="url(#stepBg)" stroke="#234233" stroke-width="1.2"/>
-    <rect x="18" y="16" width="34" height="24" rx="6" fill="#183628" stroke="#33664d" stroke-width="1"/>
-    <text x="28" y="32" fill="#7da58f" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11" font-weight="700">03</text>
-    <text x="62" y="32" fill="#f4f8f3" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700">CLUE DISCUSSION</text>
-    <text x="18" y="72" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• 3D flip card role reveal</text>
-    <text x="18" y="94" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Timed round discussion passes</text>
-    <text x="18" y="116" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Real-time synchronized feed</text>
-    <text x="18" y="146" fill="#5a7366" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="600">60S CLUE PASSES · PASS DEVICE</text>
+  <!-- Step 3: Clues -->
+  <g transform="translate(664, 52)">
+    <rect width="250" height="174" rx="18" fill="#ffffff" stroke="rgba(11, 23, 19, 0.12)" stroke-width="1.2" filter="url(#cardShadowFlow)"/>
+    <rect x="18" y="16" width="34" height="24" rx="6" fill="#f1f5ef" stroke="rgba(11, 23, 19, 0.12)" stroke-width="1"/>
+    <text x="28" y="32.5" fill="#0b1713" font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="11" font-weight="700">03</text>
+    <text x="62" y="33" fill="#0b1713" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="800">GIVE CLUES</text>
+
+    <text x="18" y="74" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Take turns giving one clue</text>
+    <text x="18" y="98" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Don't make it too obvious</text>
+    <text x="18" y="122" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Imposter tries to blend in</text>
+
+    <rect x="18" y="142" width="134" height="20" rx="10" fill="#dfe9e1"/>
+    <text x="85" y="155.5" text-anchor="middle" fill="#284437" font-family="ui-monospace, monospace" font-size="9" font-weight="700">1–2 ROUNDS OF CLUES</text>
   </g>
 
   <!-- Arrow 3 -> 4 -->
-  <path d="M 930 149 L 954 149" stroke="#3d6651" stroke-width="2" stroke-linecap="round"/>
-  <polygon points="954,144 962,149 954,154" fill="#3d6651"/>
+  <path d="M 930 139 L 954 139" stroke="#7da58f" stroke-width="2" stroke-linecap="round"/>
+  <polygon points="954,134 962,139 954,144" fill="#7da58f"/>
 
-  <!-- Step 4: Emergency Vote & Results -->
-  <g transform="translate(972, 62)">
-    <rect width="180" height="174" rx="16" fill="url(#stepBg)" stroke="#234233" stroke-width="1.2"/>
-    <rect x="18" y="16" width="34" height="24" rx="6" fill="#183628" stroke="#33664d" stroke-width="1"/>
-    <text x="28" y="32" fill="#7da58f" font-family="ui-monospace, SFMono-Regular, monospace" font-size="11" font-weight="700">04</text>
-    <text x="62" y="32" fill="#f4f8f3" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700">VOTE &amp; VERDICT</text>
-    <text x="18" y="72" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Emergency voting</text>
-    <text x="18" y="94" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Ballot decryption</text>
-    <text x="18" y="116" fill="#9db0a5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="400">• Ejection &amp; victory</text>
-    <text x="18" y="146" fill="#5a7366" font-family="ui-monospace, SFMono-Regular, monospace" font-size="10" font-weight="600">BALLOT SUMMARY</text>
+  <!-- Step 4: Vote -->
+  <g transform="translate(972, 52)">
+    <rect width="180" height="174" rx="18" fill="#ffffff" stroke="rgba(11, 23, 19, 0.12)" stroke-width="1.2" filter="url(#cardShadowFlow)"/>
+    <rect x="18" y="16" width="34" height="24" rx="6" fill="#f1f5ef" stroke="rgba(11, 23, 19, 0.12)" stroke-width="1"/>
+    <text x="28" y="32.5" fill="#0b1713" font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="11" font-weight="700">04</text>
+    <text x="62" y="33" fill="#0b1713" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="800">VOTE</text>
+
+    <text x="18" y="74" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Debate who is guilty</text>
+    <text x="18" y="98" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Vote or skip</text>
+    <text x="18" y="122" fill="#475b52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12.5" font-weight="500">• Catch them or they win</text>
+
+    <rect x="18" y="142" width="134" height="20" rx="10" fill="#f1f5ef"/>
+    <text x="85" y="155.5" text-anchor="middle" fill="#0b1713" font-family="ui-monospace, monospace" font-size="9" font-weight="700">INSTANT REMATCH</text>
   </g>
 </svg>
