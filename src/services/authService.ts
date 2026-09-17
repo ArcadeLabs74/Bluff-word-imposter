@@ -7,6 +7,19 @@ export interface AuthState {
   loading: boolean;
 }
 
+/**
+ * Get current base URL including subpaths (crucial for GitHub Pages repo subdirectories)
+ */
+function getAuthRedirectUrl(): string {
+  if (typeof window === 'undefined') return '';
+  const url = new URL(window.location.href);
+  let pathname = url.pathname;
+  if (!pathname.endsWith('/')) {
+    pathname += '/';
+  }
+  return `${url.origin}${pathname}`;
+}
+
 class AuthService {
   /**
    * Sign up with Email + Password and optional Display Name
@@ -47,7 +60,7 @@ class AuthService {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin,
+        redirectTo: getAuthRedirectUrl(),
       },
     });
 
@@ -59,7 +72,7 @@ class AuthService {
    */
   public async resetPassword(email: string): Promise<{ error: AuthError | null }> {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}`,
+      redirectTo: getAuthRedirectUrl(),
     });
 
     return { error };
