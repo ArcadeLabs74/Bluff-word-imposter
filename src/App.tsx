@@ -469,7 +469,7 @@ export function App() {
         <div className="nav-brand">
           <span className="status-dot-live" />
           <span className="nav-brand-text">
-            {isOnline && onlineRoom ? `GTI // ${onlineRoom.code}` : 'GTI // SOCIAL DEDUCTION'}
+            {isOnline && onlineRoom ? `BLUFF // ${onlineRoom.code}` : 'BLUFF // SOCIAL DEDUCTION'}
           </span>
         </div>
 

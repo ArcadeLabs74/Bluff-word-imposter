@@ -237,10 +237,10 @@ export function HomeScreen({
           <span className="brand-spine-logo">
             <VenetianMask size={22} strokeWidth={2.4} />
           </span>
-          <span className="brand-spine-ver">GTI // 01</span>
+          <span className="brand-spine-ver">BLUFF // 01</span>
         </div>
 
-        <h2 className="brand-spine-title">IMPOSTER</h2>
+        <h2 className="brand-spine-title">BLUFF</h2>
 
         <div className="brand-spine-footer">
           <span className="status-dot-live" />

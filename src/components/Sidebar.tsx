@@ -60,7 +60,7 @@ export function Sidebar({ inGame, onOpenRules, onLeave }: SidebarProps) {
 
       <span className="rail-spacer" />
 
-      <span className="rail-avatar">GTI</span>
+      <span className="rail-avatar" style={{ fontSize: '0.65rem' }}>BLUFF</span>
     </aside>
   );
 }
