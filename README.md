@@ -122,4 +122,6 @@ supabase functions deploy generate-word
 
 ## License
 
-MIT
+This project is licensed under the [GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0).
+
+Anyone can run, study, and modify this project. However, if you host a modified version as a network/web service or distribute it, you must share your modified source code under the same AGPL-3.0 license.
